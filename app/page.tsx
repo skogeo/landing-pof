@@ -6,7 +6,7 @@ const LandingPage = () => {
     <div className="min-h-screen flex flex-col bg-white text-black">
       <header className="p-4 flex justify-between items-center">
         <Link href="/" className="hover:opacity-75 transition-opacity">
-          <div className="w-6 h-6 border-2 border-black"></div>
+          <div className="w-6 h-6 border-2 border-black bg-black"></div>
         </Link>
         <nav>
           <ul className="flex space-x-4">
@@ -20,7 +20,7 @@ const LandingPage = () => {
             </li>
             <li>
               <Link
-                href="/blog"
+                href="/en/blog"
                 className="text-3xl font-medium hover:underline"
               >
                 Blog
@@ -44,6 +44,19 @@ const LandingPage = () => {
           <br />
           proof of concept
         </h1>
+
+        <div className="w-full max-w-4xl flex justify-center mb-12">
+          <div className="w-1/2 border-t border-black"></div>
+        </div>
+
+        <section className="w-full max-w-4xl">
+          <p className="text-center text-xl mb-12">
+            This is a proof of concept for a landing page using Next.js and
+            Strapi CMS. The goal is to show how to build a simple landing page
+            with a blog using Strapi as the backend. The blog posts are fetched
+            from the Strapi API and displayed on the page.
+          </p>
+        </section>
 
         <div className="w-full max-w-4xl flex justify-center mb-12">
           <div className="w-1/2 border-t border-black"></div>

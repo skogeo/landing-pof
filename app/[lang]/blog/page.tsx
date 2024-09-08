@@ -1,6 +1,18 @@
 import Link from 'next/link';
 
-export const getPost = async (lang) => {
+export const generateStaticParams = async () => {
+  const localesResponse = await fetch(
+    'http://127.0.0.1:1337/api/i18n/locales',
+    {
+      cache: 'no-store',
+    }
+  );
+  const locales = await localesResponse.json();
+  console.log(locales);
+  return locales.map((locale) => ({ lang: locale.code }));
+};
+
+const getPosts = async (lang) => {
   const source = await fetch(`http://127.0.0.1:1337/api/posts?locale=${lang}`, {
     cache: 'no-store',
   })
@@ -11,8 +23,8 @@ export const getPost = async (lang) => {
   return source.data;
 };
 
-export default async function ExamplePage({ params }) {
-  const posts = await getPost(params.lang);
+export default async function BlogsPage({ params }) {
+  const posts = await getPosts(params.lang);
   return (
     <div>
       <h1 className="">Blogs</h1>

@@ -1,5 +1,4 @@
 import { MDXRemote } from 'next-mdx-remote/rsc';
-import Image from 'next/image';
 
 const components = {
   // TODO: research problem with Image localhost
@@ -21,8 +20,25 @@ const components = {
   },
 };
 
-export const getPost = async (id, lang = 'en') => {
+const getPosts = async () => {
+  const source = await fetch(`http://127.0.0.1:1337/api/posts?locale=all`, {
+    cache: 'no-store',
+  }).then((res) => res.json());
+  return source.data;
+};
+
+export async function generateStaticParams() {
+  const posts = await getPosts();
+  return posts.map((post) => ({
+    id: post.id.toString(),
+    lang: post.attributes.locale,
+  }));
+}
+
+const getPost = async (id, lang = 'en') => {
   console.log(lang);
+  // http://localhost:1337/api/posts/1?populate=localizations
+  // to get all localizations connected to the page
   const source = await fetch(
     `http://127.0.0.1:1337/api/posts/${id}?locale=${lang}`,
     {
