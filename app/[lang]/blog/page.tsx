@@ -1,21 +1,15 @@
 import Link from 'next/link';
 
 export const generateStaticParams = async () => {
-  const localesResponse = await fetch(
-    'http://127.0.0.1:1337/api/i18n/locales',
-    {
-      cache: 'no-store',
-    }
-  );
+  const localesResponse = await fetch('http://127.0.0.1:1337/api/i18n/locales');
   const locales = await localesResponse.json();
-  console.log(locales);
-  return locales.map((locale) => ({ lang: locale.code }));
+  return locales.map((locale) => ({
+    lang: locale.code === 'en' ? '' : locale.code,
+  }));
 };
 
 const getPosts = async (lang) => {
-  const source = await fetch(`http://127.0.0.1:1337/api/posts?locale=${lang}`, {
-    cache: 'no-store',
-  })
+  const source = await fetch(`http://127.0.0.1:1337/api/posts?locale=${lang}`)
     .then((res) => res.json())
     .catch((err) => {
       console.error(err);
